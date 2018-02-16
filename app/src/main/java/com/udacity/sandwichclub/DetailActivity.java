@@ -33,8 +33,12 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        //Bind the views
+
+        //ImageView
         ingredientsIv = findViewById(R.id.image_iv);
 
+        //TextView
         name           = findViewById(R.id.name_tv);
         aka            = findViewById(R.id.AKA_tv);
         origin         = findViewById(R.id.origin_tv);
@@ -46,6 +50,7 @@ public class DetailActivity extends AppCompatActivity {
             closeOnError();
         }
 
+        //Get the sandwich position
         int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
         if (position == DEFAULT_POSITION) {
             // EXTRA_POSITION not found in intent
@@ -53,8 +58,13 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
+        //Get the Sandwiches Array
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
+
+        //Get the Sandwich in the position given
         String json = sandwiches[position];
+
+        //Create a new object Sandwich with the data
         try {
             sandwich = JsonUtils.parseSandwichJson(json);
         } catch (JSONException e) {
@@ -70,11 +80,17 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Kill the Activity and show a Toast with the text "Sandwich data no available"
+     */
     private void closeOnError() {
         finish();
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Populate all the views of the UI
+     */
     private void populateUI() {
 
         Picasso.with(this)
@@ -85,6 +101,7 @@ public class DetailActivity extends AppCompatActivity {
 
         name.setText(sandwich.getMainName());
 
+        aka.setText("");
         for(int i = 0;i<sandwich.getAlsoKnownAs().size();i++){
 
             aka.append("- " + sandwich.getAlsoKnownAs().get(i));
@@ -93,6 +110,7 @@ public class DetailActivity extends AppCompatActivity {
 
         origin.setText(sandwich.getPlaceOfOrigin());
 
+        ingredients.setText("");
         for(int i = 0;i<sandwich.getIngredients().size();i++){
 
             ingredients.append("- " + sandwich.getIngredients().get(i));
@@ -100,6 +118,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         description.setText(sandwich.getDescription());
+        description.append("\n");
 
     }
 }

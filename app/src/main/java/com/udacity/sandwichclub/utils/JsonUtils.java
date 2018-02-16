@@ -1,7 +1,5 @@
 package com.udacity.sandwichclub.utils;
 
-import android.util.Log;
-
 import com.udacity.sandwichclub.model.Sandwich;
 
 import org.json.JSONArray;
@@ -28,7 +26,6 @@ public class JsonUtils {
         // Get the parts about names and create a new JSONObject
         JSONObject sandwichName = sandwichJSon.getJSONObject("name");
 
-        // Get the name of the sandwich
         String mainName = sandwichName.getString("mainName");
 
         // Get the list of sandwich names and add it to a JSONArray
@@ -37,13 +34,10 @@ public class JsonUtils {
         // Convert the sandwich names JSONArray in an List<String>
         List<String> alsoKnowAs = getStringListFromJsonArray(sandwichAKA);
 
-        // Get the place of origin of the sandwich
         String placeOfOrigin = sandwichJSon.getString("placeOfOrigin");
 
-        // Get the description of the sandwich
         String description = sandwichJSon.getString("description");
 
-        // Get the image of the sandwich
         String image = sandwichJSon.getString("image");
 
         // Get the list of the sandwich ingredients and add it to a JSONArray
@@ -66,11 +60,14 @@ public class JsonUtils {
      * @throws JSONException Problems with JSON
      */
     public static List<String> getStringListFromJsonArray(JSONArray jArray) throws JSONException {
+
         List<String> returnList = new ArrayList<String>();
+
         for (int i = 0; i < jArray.length(); i++) {
             String val = jArray.getString(i);
             returnList.add(val);
         }
+
         return returnList;
     }
 }
